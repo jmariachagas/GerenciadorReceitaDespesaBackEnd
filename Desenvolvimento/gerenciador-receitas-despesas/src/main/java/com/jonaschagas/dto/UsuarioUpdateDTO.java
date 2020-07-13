@@ -1,44 +1,68 @@
 package com.jonaschagas.dto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
-import org.hibernate.validator.constraints.Length;
+import com.jonaschagas.domain.Endereco;
+import com.jonaschagas.domain.Usuario;
 
-import com.jonaschagas.service.validation.UsuarioInsert;
+public class UsuarioUpdateDTO {
 
-@UsuarioInsert
-public class UsuarioNewDTO {
-	
-	@NotEmpty(message = "Preenchimento obrigatório!")
-	@Length(min = 5, max = 120, message = "O nome da cliente deve conter no minimo 5 caracteres e no máximo 120.")
-	private String nome;	
-	private String cpf;
-	
-	@NotEmpty(message = "Preenchimento obrigatório!")
-	@Email(message = "Email inválido!")
+	private long id;
+
+	private String nome;
+
 	private String email;
-	
-	@NotEmpty
-	private String senha;
-	
+
 	private String logradouro;
 	private String complemento;
-	
 	private String numero;
 	private String bairro;
-	private String cep;	
+	private String cep;
 	private Long cidadeId;
 	
 	private String logradouro2;
 	private String complemento2;
 	private String numero2;
 	private String bairro2;
-	private String cep2;	
+	private String cep2;
 	private Long cidadeId2;
+
+	public UsuarioUpdateDTO(Usuario usuario) {
+		id = usuario.getId();
+		nome = usuario.getNome();
+		email = usuario.getEmail();
+		buildEnderecos(usuario.getEnderecos());		
+	}
 	
-	public UsuarioNewDTO() {
+	public UsuarioUpdateDTO() {
 		super();
+	}
+	
+	private void buildEnderecos(List<Endereco> enderecos) {
+		
+		if(enderecos != null) {
+			logradouro = enderecos.get(0).getLogradouro();
+			complemento = enderecos.get(0).getComplemento();
+			numero = enderecos.get(0).getNumero();
+			bairro = enderecos.get(0).getBairro();
+			cep = enderecos.get(0).getCep();
+			cidadeId = enderecos.get(0).getCidade().getId();
+			
+			logradouro2 = enderecos.get(1).getLogradouro();
+			complemento2 = enderecos.get(1).getComplemento();
+			numero2 = enderecos.get(1).getNumero();
+			bairro2 = enderecos.get(1).getBairro();
+			cep2 = enderecos.get(1).getCep();
+			cidadeId2 = enderecos.get(1).getCidade().getId();
+		}		
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -49,28 +73,12 @@ public class UsuarioNewDTO {
 		this.nome = nome;
 	}
 
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
 	}
 
 	public String getLogradouro() {

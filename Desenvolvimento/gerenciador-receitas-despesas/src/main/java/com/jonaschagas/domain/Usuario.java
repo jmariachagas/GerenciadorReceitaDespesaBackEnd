@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Usuario implements Serializable{
 
@@ -26,7 +28,10 @@ public class Usuario implements Serializable{
 	private String nome;
 	private String cpf;
 	private String email;
+	
+	@JsonIgnore
 	private String senha;
+	
 	public Usuario(String nome, String cpf, String email, String senha) {
 		super();
 		this.nome= nome;		this.cpf = cpf;
@@ -63,8 +68,11 @@ public class Usuario implements Serializable{
 	
 	public long getId() {
 		return id;
-	}
+	}	
 	
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getNome() {
 		return nome;
 	}
