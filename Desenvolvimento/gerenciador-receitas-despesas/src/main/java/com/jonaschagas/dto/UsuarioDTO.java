@@ -7,6 +7,7 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.jonaschagas.domain.Cidade;
 import com.jonaschagas.domain.Usuario;
 
 public class UsuarioDTO implements Serializable{
@@ -22,12 +23,15 @@ public class UsuarioDTO implements Serializable{
 	@NotEmpty(message = "Preenchimento obrigatório!")
 	@Email(message = "Email inválido!")
 	private String email;
+	
+	private String cidade; 
 
 	public UsuarioDTO(Usuario usuario) {
 		super();
 		id = usuario.getId();
 		nome = usuario.getNome();
 		email = usuario.getEmail();
+		cidade = usuario.getEnderecos().get(0).getCidade().getNome();
 	}	
 
 	public UsuarioDTO() {
@@ -56,5 +60,13 @@ public class UsuarioDTO implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
 }
